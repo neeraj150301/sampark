@@ -113,6 +113,13 @@ class _AuthPageState extends State<AuthPage>
           const SizedBox(height: 18),
           MyButton(
             text: "Login",
+            // style: TextStyle(
+            //         fontSize: 15,
+
+            //           decoration: TextDecoration.underline,
+            //           decorationStyle: TextDecorationStyle.dashed,
+            //           fontWeight: FontWeight.bold,
+            //           color: Theme.of(context).colorScheme.primary),
             onPressed: () => login(),
           ),
           const SizedBox(height: 16),
@@ -128,6 +135,10 @@ class _AuthPageState extends State<AuthPage>
                 child: Text(
                   "Sign Up Now",
                   style: TextStyle(
+                    fontSize: 15,
+
+                      decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.dashed,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary),
                 ),
@@ -180,6 +191,9 @@ class _AuthPageState extends State<AuthPage>
                 child: Text(
                   "Login Now",
                   style: TextStyle(
+                    fontSize: 15,
+                    decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.dashed,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary),
                 ),
@@ -191,16 +205,9 @@ class _AuthPageState extends State<AuthPage>
     );
   }
 
-  void login() {
+  void login() {}
 
-
-  }
-
-  
-  void signUp() {
-
-
-  }
+  void signUp() {}
   void toogleLoginSignUp() {
     showLogin = !showLogin;
     if (showLogin) {
