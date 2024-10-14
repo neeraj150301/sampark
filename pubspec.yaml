@@ -16,6 +16,9 @@ dependencies:
   flutter_svg: ^2.0.10+1 # for svg icons
   slide_to_act: ^2.0.2  # for slide to act in welcome page
   get: ^4.6.6  # getx for state management 
+  firebase_core: ^3.4.0
+  firebase_auth: ^5.2.0
+  cloud_firestore: ^5.4.0
 
 
 dev_dependencies:

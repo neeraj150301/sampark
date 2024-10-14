@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597918869719",
+    "project_id": "chatty-4c0af",
+    "storage_bucket": "chatty-4c0af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597918869719:android:8110a903ab84c2f2532892",
+        "android_client_info": {
+          "package_name": "com.example.sampark"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYyXKsWEgwA97ynZYQE98xu5XAnXM6gc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

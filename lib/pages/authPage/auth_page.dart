@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../config/svgs.dart';
+import '../../controller/auth_service.dart';
 import '../../widget/my_button.dart';
 import '../../widget/my_text_field.dart';
 
@@ -113,13 +113,6 @@ class _AuthPageState extends State<AuthPage>
           const SizedBox(height: 18),
           MyButton(
             text: "Login",
-            // style: TextStyle(
-            //         fontSize: 15,
-
-            //           decoration: TextDecoration.underline,
-            //           decorationStyle: TextDecorationStyle.dashed,
-            //           fontWeight: FontWeight.bold,
-            //           color: Theme.of(context).colorScheme.primary),
             onPressed: () => login(),
           ),
           const SizedBox(height: 16),
@@ -135,8 +128,7 @@ class _AuthPageState extends State<AuthPage>
                 child: Text(
                   "Sign Up Now",
                   style: TextStyle(
-                    fontSize: 15,
-
+                      fontSize: 15,
                       decoration: TextDecoration.underline,
                       decorationStyle: TextDecorationStyle.dashed,
                       fontWeight: FontWeight.bold,
@@ -191,8 +183,8 @@ class _AuthPageState extends State<AuthPage>
                 child: Text(
                   "Login Now",
                   style: TextStyle(
-                    fontSize: 15,
-                    decoration: TextDecoration.underline,
+                      fontSize: 15,
+                      decoration: TextDecoration.underline,
                       decorationStyle: TextDecorationStyle.dashed,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary),
@@ -205,9 +197,42 @@ class _AuthPageState extends State<AuthPage>
     );
   }
 
-  void login() {}
+  void login() async {
+    final authService = AuthService();
 
-  void signUp() {}
+    try {
+      await authService.signInWithEmailAndPassword(
+        _loginEmailController.text,
+        _loginPasswordController.text,
+      );
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(title: Text(e.toString())));
+    }
+  }
+
+  void signUp() async {
+    final authService = AuthService();
+    if (_signupPasswordController.text ==
+        _signupConfirmPasswordController.text) {
+      try {
+        await authService.signUpWithEmailAndPassword(
+          _signupEmailController.text,
+          _signupPasswordController.text,
+        );
+      } catch (e) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(title: Text(e.toString())));
+      }
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(title: Text("Password don't match!")));
+    }
+  }
+
   void toogleLoginSignUp() {
     showLogin = !showLogin;
     if (showLogin) {

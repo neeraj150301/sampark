@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:sampark/config/svgs.dart';
 
-import '../authPage/auth_page.dart';
+import '../authPage/auth_gate.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -107,7 +107,7 @@ class WelcomePage extends StatelessWidget {
               key: key,
               onSubmit: () {
                 // return null;
-                Get.to(() => const AuthPage());
+                Get.to(() => const AuthGate());
                 return null;
                 // Future.delayed(
                 //   Duration(seconds: 1),
