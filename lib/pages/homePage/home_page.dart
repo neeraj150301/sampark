@@ -18,9 +18,6 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Home"),
-        // actions: [
-        //   IconButton(onPressed: logout, icon: Icon(Icons.logout_outlined))
-        // ],
       ),
       drawer: MyDrawer(),
       body: _buildUserList(),
@@ -62,7 +59,7 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ChatPage(user: userData['email']),
+                builder: (context) => ChatPage(receiverEmail: userData['email'], receiverId: userData['uid']),
               ),
             );
           },

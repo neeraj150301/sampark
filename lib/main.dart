@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sampark/config/theme.dart';
 import 'package:sampark/firebase_options.dart';
 import 'package:sampark/pages/welcomePage/welcome_page.dart';
+import 'controller/theme_controller.dart';
 import 'pages/authPage/auth_gate.dart';
 import 'pages/splashPage/splashPage.dart';
 
@@ -18,13 +19,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    final ThemeController themeController = Get.put(ThemeController());
+    
+    return Obx(() => GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sampark',
       theme: lightTheme,
-      // darkTheme: darkTheme,
-      // themeMode: ThemeMode.dark,
+      darkTheme: darkTheme,
+      themeMode: themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
       home: const AuthGate(),
-    );
+    ));
   }
 }

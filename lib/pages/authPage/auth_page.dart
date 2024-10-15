@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import '../../config/svgs.dart';
 import '../../controller/auth_service.dart';
 import '../../widget/my_button.dart';
@@ -49,18 +50,26 @@ class _AuthPageState extends State<AuthPage>
         child: Column(
           children: [
             Container(
-                padding: const EdgeInsets.only(top: 30),
-                height: MediaQuery.of(context).size.height / 3,
+                padding: const EdgeInsets.only(top: 60),
+                height: MediaQuery.of(context).size.height / 3.5,
                 child: SvgPicture.asset(
                   AssetsSvgs.appIcon,
                   height: 60,
-                  color: Theme.of(context).colorScheme.primary,
+                  // color: Theme.of(context).colorScheme.primary,
                 )),
+            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(20),
+                     boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
                     border: Border.all(
                         width: 2,
                         color: Theme.of(context).colorScheme.tertiary)),
@@ -113,7 +122,16 @@ class _AuthPageState extends State<AuthPage>
           const SizedBox(height: 18),
           MyButton(
             text: "Login",
-            onPressed: () => login(),
+            onPressed: () {
+              if (_loginEmailController.text.isNotEmpty &&
+                  _loginPasswordController.text.isNotEmpty) {
+                login();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Please fill in all fields.")),
+                );
+              }
+            },
           ),
           const SizedBox(height: 16),
           Row(
@@ -168,7 +186,12 @@ class _AuthPageState extends State<AuthPage>
           const SizedBox(height: 18),
           MyButton(
             text: "Sign Up",
-            onPressed: () => signUp(),
+            onPressed: () {
+              // if (condition) {
+
+              // }
+              signUp();
+            },
           ),
           const SizedBox(height: 16),
           Row(
@@ -229,7 +252,8 @@ class _AuthPageState extends State<AuthPage>
     } else {
       showDialog(
           context: context,
-          builder: (context) => AlertDialog(title: Text("Password don't match!")));
+          builder: (context) =>
+              AlertDialog(title: Text("Password don't match!")));
     }
   }
 
