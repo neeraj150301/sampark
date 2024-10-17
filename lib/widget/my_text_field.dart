@@ -1,36 +1,127 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
+class MyTextField extends StatefulWidget {
   final String hintText;
-  final bool obscureText;
+  bool obscureText;
   final TextEditingController controller;
 
-  const MyTextField(
+  MyTextField(
       {super.key,
       required this.hintText,
       required this.obscureText,
       required this.controller});
 
   @override
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  @override
   Widget build(BuildContext context) {
-    return TextField(
-        obscureText: obscureText,
-        controller: controller,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: TextFormField(
+        obscureText: widget.obscureText,
+        controller: widget.controller,
         keyboardType: TextInputType.emailAddress,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (value) {
+          if (widget.hintText == "Enter Email") {
+            if (value == null || value.isEmpty) {
+              return 'Email cannot be empty';
+            }
+            // Simple email validation
+            String pattern =
+                r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+            RegExp regex = RegExp(pattern);
+            if (!regex.hasMatch(value)) {
+              return 'Enter a valid email';
+            }
+          }
+          if (widget.hintText.contains("Password")) {
+            if (value == null || value.isEmpty) {
+              return 'Password cannot be empty';
+            }
+            if (value.length < 6) {
+              return 'Password lenght should not be less then 6';
+            }
+          }
+
+          return null;
+        },
         decoration: InputDecoration(
-          // labelText: hintText,
+          prefixIcon: (widget.hintText == "Enter Email")
+              ? const Icon(Icons.email)
+              : const Icon(Icons.password),
+          prefixIconColor: Theme.of(context).colorScheme.primary,
+          labelText: widget.hintText,
+          labelStyle: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 16.0,
+            horizontal: 20.0,
+          ),
           enabledBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).colorScheme.tertiary),
+            borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.secondary,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).colorScheme.primary),
+            borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.primary,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
           ),
-          fillColor: Theme.of(context).colorScheme.secondary,
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          // fillColor: Theme.of(context).colorScheme.secondary,
+          fillColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
+          suffixIcon: (widget.hintText.contains("Password"))
+              ? Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.obscureText = !widget.obscureText;
+                        });
+                      },
+                      icon: widget.obscureText
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.visibility_off)),
+                )
+              : null,
+          suffixIconColor: Theme.of(context).colorScheme.primary,
+          errorStyle: const TextStyle(
+            color: Colors.red,
+          ),
           filled: true,
-          hintText: hintText,
-          hintStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
-        ));
+          // hintText: hintText,
+          // hintStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+        ),
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onSurface,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
   }
 }

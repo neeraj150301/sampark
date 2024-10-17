@@ -7,7 +7,7 @@ ThemeData lightTheme = ThemeData(
   // primary: Colors.grey.shade500,
   primary: Color.fromARGB(255, 94, 106, 112),
 
-  secondary: Colors.grey.shade200,
+  secondary: Colors.grey.shade300,
   tertiary: Colors.white,
   inversePrimary: Colors.grey.shade900,
 ));
