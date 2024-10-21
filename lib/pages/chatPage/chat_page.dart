@@ -77,36 +77,39 @@ class ChatPage extends StatelessWidget {
 
   // type message area and send button
   Widget _buildMessageInput() {
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(
-                left: 20.0, right: 20.0, bottom: 25, top: 10),
-            child: MyTextField(
-              hintText: 'Type message here...',
-              obscureText: false,
-              controller: _messageController,
+    return Container(
+      color: Colors.transparent,
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 20.0, right: 20.0, bottom: 25, top: 10),
+              child: MyTextField(
+                hintText: 'Type message here...',
+                obscureText: false,
+                controller: _messageController,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 15.0),
-          child: Container(
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(255, 188, 85, 202)),
-            child: IconButton(
-                onPressed: () {
-                  sendMessage();
-                },
-                icon: const Icon(
-                  Icons.send,
-                  color: Colors.white,
-                )),
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0, bottom: 25, top: 10),
+            child: Container(
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(255, 188, 85, 202)),
+              child: IconButton(
+                  onPressed: () {
+                    sendMessage();
+                  },
+                  icon: const Icon(
+                    Icons.send,
+                    color: Colors.white,
+                  )),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

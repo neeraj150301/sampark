@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import '../../config/svgs.dart';
 import '../../controller/auth_service.dart';
 import '../../widget/my_button.dart';
@@ -24,8 +25,12 @@ class _AuthPageState extends State<AuthPage>
   final TextEditingController _signupConfirmPasswordController =
       TextEditingController();
   bool showLogin = true;
+
   final _loginFormKey = GlobalKey<FormState>();
   final _signUpFormKey = GlobalKey<FormState>();
+
+  final AuthService loginController =
+      Get.put(AuthService()); // Initialize controller
 
   @override
   void initState() {
@@ -105,8 +110,8 @@ class _AuthPageState extends State<AuthPage>
                       child: TabBarView(
                         controller: _tabController,
                         children: [
-                          _buildLoginTab(),
-                          _buildSignUpTab(),
+                          _buildLoginTab(context),
+                          _buildSignUpTab(context),
                         ],
                       ),
                     ),
@@ -120,7 +125,9 @@ class _AuthPageState extends State<AuthPage>
     );
   }
 
-  Widget _buildLoginTab() {
+  Widget _buildLoginTab(BuildContext context) {
+    print(loginController.loading.value);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
       child: Form(
@@ -141,18 +148,32 @@ class _AuthPageState extends State<AuthPage>
             ),
             const SizedBox(height: 18),
             MyButton(
-              text: "Login",
+              text: loginController.loading.value
+                  ? const CircularProgressIndicator()
+                  : Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(1),
+                        letterSpacing: 1.2,
+                      ),
+                    ),
               onPressed: () {
                 if (_loginFormKey.currentState!.validate()) {
                   if (_loginEmailController.text.isNotEmpty &&
                       _loginPasswordController.text.isNotEmpty) {
-                    login();
+                    login(context);
                   }
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please fix the errors.")),
-                  );
                 }
+                //  else {
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     const SnackBar(content: Text("Please fix the errors.")),
+                //   );
+                // }
               },
             ),
             const SizedBox(height: 16),
@@ -184,7 +205,7 @@ class _AuthPageState extends State<AuthPage>
     );
   }
 
-  Widget _buildSignUpTab() {
+  Widget _buildSignUpTab(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       child: SingleChildScrollView(
@@ -212,15 +233,29 @@ class _AuthPageState extends State<AuthPage>
               ),
               const SizedBox(height: 18),
               MyButton(
-                text: "Sign Up",
+                text: loginController.loading.value
+                    ? const CircularProgressIndicator()
+                    : Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(1),
+                          letterSpacing: 1.2,
+                        ),
+                      ),
                 onPressed: () {
                   if (_signUpFormKey.currentState!.validate()) {
-                    signUp();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Please fix the errors.")),
-                    );
+                    signUp(context);
                   }
+                  //  else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(content: Text("Please fix the errors.")),
+                  //   );
+                  // }
                 },
               ),
               const SizedBox(height: 16),
@@ -253,41 +288,34 @@ class _AuthPageState extends State<AuthPage>
     );
   }
 
-  void login() async {
+  void login(BuildContext context) async {
     final authService = AuthService();
 
     try {
       await authService.signInWithEmailAndPassword(
         _loginEmailController.text.trim(),
         _loginPasswordController.text.trim(),
+        context,
       );
     } catch (e) {
-      String errorMessage;
-      switch (e.toString()) {
-        case 'wrong-password':
-          errorMessage = 'The password is incorrect.';
-          break;
-        case 'user-not-found':
-          errorMessage = 'No user found with this email.';
-          break;
-        case 'invalid-email':
-          errorMessage = 'The email address is not valid.';
-          break;
-        default:
-          errorMessage = 'An error occurred. Please try again.';
-      }
-
+      // Handle any other type of exception
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Login Failed'),
-          content: Text(errorMessage),
+          title: const Text('Error'),
+          content: const Text('An error occurred. Please try again.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
         ),
       );
     }
   }
 
-  void signUp() async {
+  void signUp(BuildContext context) async {
     final authService = AuthService();
     if (_signupPasswordController.text ==
         _signupConfirmPasswordController.text) {
@@ -295,6 +323,7 @@ class _AuthPageState extends State<AuthPage>
         await authService.signUpWithEmailAndPassword(
           _signupEmailController.text,
           _signupPasswordController.text,
+          context,
         );
       } catch (e) {
         showDialog(
@@ -303,7 +332,21 @@ class _AuthPageState extends State<AuthPage>
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password don't match!")),
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.error, color: Colors.white),
+              SizedBox(width: 10),
+              Text("Passwords doesn't match!"),
+            ],
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(16.0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          duration: const Duration(seconds: 3),
+        ),
       );
     }
   }

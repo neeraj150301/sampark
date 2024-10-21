@@ -27,7 +27,7 @@ class WelcomePage extends StatelessWidget {
               // width: 50,
               child: SvgPicture.asset(AssetsSvgs.appIcon),
             ),
-            const Text("SAMPARK",
+            const Text("CHATTY",
                 style: TextStyle(
                     fontFamily: 'SofadiOne',
                     fontSize: 50,
@@ -116,7 +116,7 @@ class WelcomePage extends StatelessWidget {
               },
               innerColor: Colors.transparent,
               outerColor: const Color.fromARGB(255, 168, 72, 147),
-              text: "Slide To Sampark",
+              text: "Slide To CHATTY",
               textStyle: TextStyle(color: Colors.grey[300], fontSize: 20),
               sliderButtonIcon: SvgPicture.asset(
                 AssetsSvgs.appIcon,

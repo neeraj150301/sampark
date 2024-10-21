@@ -20,14 +20,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.put(ThemeController());
-    
+
     return Obx(() => GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Sampark',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
-      home: const AuthGate(),
-    ));
+          debugShowCheckedModeBanner: false,
+          title: 'Sampark',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeController.isDarkMode.value
+              ? ThemeMode.dark
+              : ThemeMode.light,
+          home: const AuthGate(),
+        ));
   }
 }

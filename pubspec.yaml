@@ -19,6 +19,7 @@ dependencies:
   firebase_core: ^3.4.0 # for firebase
   firebase_auth: ^5.2.0 # for firebase auth
   cloud_firestore: ^5.4.0  # for firestore DB
+  lottie: ^2.2.0   # for lottie animations
 
 
 
@@ -33,6 +34,7 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/lottie/
     # - images/a_dot_ham.jpeg
 
   fonts:

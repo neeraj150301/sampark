@@ -52,7 +52,7 @@ class _MyTextFieldState extends State<MyTextField> {
         decoration: InputDecoration(
           prefixIcon: (widget.hintText == "Enter Email")
               ? const Icon(Icons.email)
-              : const Icon(Icons.password),
+              : (widget.hintText.contains("Password")) ? const Icon(Icons.password) : null,
           prefixIconColor: Theme.of(context).colorScheme.primary,
           labelText: widget.hintText,
           labelStyle: TextStyle(

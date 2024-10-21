@@ -17,7 +17,14 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Home"),
+        title: const Text(
+          "C H A T T Y",
+          style: TextStyle(
+              fontFamily: 'SofadiOne',
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Color.fromARGB(255, 188, 85, 202)),
+        ),
       ),
       drawer: MyDrawer(),
       body: _buildUserList(),
@@ -51,7 +58,7 @@ class HomePage extends StatelessWidget {
       Map<String, dynamic> userData, BuildContext context) {
     if (userData['email'] != _authService.currentUser()!.email) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
         child: UserTile(
           user: userData['email'],
           onTap: () {
@@ -59,7 +66,9 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ChatPage(receiverEmail: userData['email'], receiverId: userData['uid']),
+                builder: (context) => ChatPage(
+                    receiverEmail: userData['email'],
+                    receiverId: userData['uid']),
               ),
             );
           },
