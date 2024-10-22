@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class AuthService extends GetxController{
-  var loading = false.obs; // Observable loading variable
-
+class AuthService {
   // fireAuth instance
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
@@ -18,7 +15,6 @@ class AuthService extends GetxController{
   Future signInWithEmailAndPassword(
       String email, String password, BuildContext context) async {
     try {
-      loading.value = true;  // Turn on loading
       // login
       UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -30,7 +26,7 @@ class AuthService extends GetxController{
           'email': email,
         },
       );
-loading.value = false;
+
       return result;
     } on FirebaseAuthException catch (e) {
       String errorMessage;
@@ -93,9 +89,8 @@ loading.value = false;
           actions: [
             TextButton(
               onPressed: () {
-                loading.value = false;
-              Navigator.of(context).pop();
-              } ,
+                Navigator.of(context).pop();
+              },
               child: Text(
                 'OK',
                 style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sampark/config/svgs.dart';
 
 import '../controller/auth_service.dart';
@@ -29,14 +30,20 @@ class MyDrawer extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
-                        child: Container(
+                        child: SizedBox(
                             height: 60,
                             child: SvgPicture.asset(AssetsSvgs.appIcon)),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
-                      Text("${auth.currentUser()!.email}")
+                      // Text(
+                      //   "${auth.currentUser()!.email}",
+                      //   style: const TextStyle(
+                      //     fontWeight: FontWeight.w500,
+                      //     fontSize: 18,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -69,10 +76,95 @@ class MyDrawer extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 25.0, bottom: 25),
-            child: ListTile(
-              title: const Text('L O G O U T'),
-              leading: const Icon(Icons.logout_outlined),
-              onTap: logout,
+            child: Column(
+              children: [
+                ListTile(
+                    title: const Text('L O G O U T'),
+                    leading: const Icon(Icons.logout_outlined),
+                    onTap: () {
+                      logoutDialog(context);
+                    }),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Logged in as: ${auth.currentUser()!.email}",
+                  style: const TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  logoutDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        title: Center(
+          child: Text(
+            'Logout?',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Lottie.asset(
+              'assets/lottie/error_red.json', // Make sure to include the asset
+              width: 100,
+              height: 100,
+              repeat: false,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "Are you sure you want to logout?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'Cancel',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+          FilledButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+
+              logout();
+            },
+            child: const Text(
+              'OK',
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
         ],

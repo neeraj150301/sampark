@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sampark/config/theme.dart';
 import 'package:sampark/firebase_options.dart';
+import 'package:sampark/pages/authPage/auth_page.dart';
 import 'package:sampark/pages/welcomePage/welcome_page.dart';
 import 'controller/theme_controller.dart';
 import 'pages/authPage/auth_gate.dart';

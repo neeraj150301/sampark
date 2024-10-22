@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class MyButton extends StatelessWidget {
   final Widget text;
   final void Function()? onPressed;
@@ -33,18 +32,18 @@ class MyButton extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: text,
-        //     child: Text(
-        //   text,
-        //   style: TextStyle(
-        //     fontSize: 19,
-        //     fontWeight: FontWeight.bold,
-        //     color: Theme.of(context).colorScheme.primary.withOpacity(1),
-        //     letterSpacing: 1.2,
-        //   ),
-        // )
-        ),
+        child:Center(
+            child: text,
+            //     child: Text(
+            //   text,
+            //   style: TextStyle(
+            //     fontSize: 19,
+            //     fontWeight: FontWeight.bold,
+            //     color: Theme.of(context).colorScheme.primary.withOpacity(1),
+            //     letterSpacing: 1.2,
+            //   ),
+            // )
+          )
       ),
     );
   }

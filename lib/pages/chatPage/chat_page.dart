@@ -18,11 +18,25 @@ class ChatPage extends StatelessWidget {
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
 
+  // scroll controller to manage scrolling
+  final ScrollController _scrollController = ScrollController();
+
   // send message
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
       await _chatService.sendMessage(receiverId, _messageController.text);
       _messageController.clear(); // clear the text field after sending message
+    }
+  }
+
+  // scroll to the bottom of the chat list
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     }
   }
 
@@ -54,11 +68,24 @@ class ChatPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        // has data
-        return ListView(
-          children:
-              snapshot.data!.docs.map((e) => _buildMessageItem(e)).toList(),
-        );
+
+        if (snapshot.data!.size == 0) {
+          return const Center(
+            child: Text('No messages yet, chat now!!!'),
+          );
+        }
+
+        // Ensure the list scrolls to bottom when data is received
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _scrollToBottom();
+        });
+
+        return ListView.builder(
+            controller: _scrollController,
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              return _buildMessageItem(snapshot.data!.docs[index]);
+            });
       },
     );
   }
@@ -66,11 +93,13 @@ class ChatPage extends StatelessWidget {
   Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     bool isCurrentUser = data['senderId'] == _authService.currentUser()!.uid;
+    DateTime dateTime = data['timestamp'].toDate();
     return Column(
       crossAxisAlignment:
           isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        ChatBubble(message: data['message'], isCurrentUser: isCurrentUser),
+        ChatBubble(message: data['message'], isCurrentUser: isCurrentUser, timestamp: dateTime),
+
       ],
     ); // display message
   }
@@ -84,7 +113,7 @@ class ChatPage extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 20.0, right: 20.0, bottom: 25, top: 10),
+                  left: 20.0, right: 20.0, bottom: 20, top: 10),
               child: MyTextField(
                 hintText: 'Type message here...',
                 obscureText: false,
@@ -93,7 +122,7 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 15.0, bottom: 25, top: 10),
+            padding: const EdgeInsets.only(right: 15.0, bottom: 20, top: 10),
             child: Container(
               decoration: const BoxDecoration(
                   shape: BoxShape.circle,

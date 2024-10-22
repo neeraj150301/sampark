@@ -52,7 +52,9 @@ class _MyTextFieldState extends State<MyTextField> {
         decoration: InputDecoration(
           prefixIcon: (widget.hintText == "Enter Email")
               ? const Icon(Icons.email)
-              : (widget.hintText.contains("Password")) ? const Icon(Icons.password) : null,
+              : (widget.hintText.contains("Password"))
+                  ? const Icon(Icons.password)
+                  : null,
           prefixIconColor: Theme.of(context).colorScheme.primary,
           labelText: widget.hintText,
           labelStyle: TextStyle(
@@ -66,7 +68,7 @@ class _MyTextFieldState extends State<MyTextField> {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
               width: 1.5,
             ),
             borderRadius: BorderRadius.circular(12.0),
@@ -93,7 +95,7 @@ class _MyTextFieldState extends State<MyTextField> {
             borderRadius: BorderRadius.circular(12.0),
           ),
           // fillColor: Theme.of(context).colorScheme.secondary,
-          fillColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           suffixIcon: (widget.hintText.contains("Password"))
               ? Padding(

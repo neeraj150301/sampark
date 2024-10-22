@@ -25,12 +25,8 @@ class _AuthPageState extends State<AuthPage>
   final TextEditingController _signupConfirmPasswordController =
       TextEditingController();
   bool showLogin = true;
-
   final _loginFormKey = GlobalKey<FormState>();
   final _signUpFormKey = GlobalKey<FormState>();
-
-  final AuthService loginController =
-      Get.put(AuthService()); // Initialize controller
 
   @override
   void initState() {
@@ -70,17 +66,29 @@ class _AuthPageState extends State<AuthPage>
                 height: 450,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
-                      color: Colors.black12,
+                      color: Get.isDarkMode
+                          ? Colors.black.withOpacity(0.2)
+                          : Colors.black12,
                       blurRadius: 10,
-                      offset: Offset(0, 5),
+                      offset: const Offset(0, 5),
                     ),
                   ],
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white,
-                      Theme.of(context).colorScheme.surface.withOpacity(0.9),
+                      Get.isDarkMode
+                          ? const Color(0xFF212121)
+                          : Theme.of(context)
+                              .colorScheme
+                              .tertiary
+                              .withOpacity(0.9),
+                      Get.isDarkMode
+                          ? const Color(0xFF424242)
+                          : Theme.of(context)
+                              .colorScheme
+                              .surface
+                              .withOpacity(0.9),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -95,8 +103,9 @@ class _AuthPageState extends State<AuthPage>
                       indicatorColor: Theme.of(context).colorScheme.primary,
                       indicatorWeight: 4,
                       labelColor: Theme.of(context).colorScheme.primary,
-                      unselectedLabelColor:
-                          Theme.of(context).colorScheme.secondary,
+                      unselectedLabelColor: Get.isDarkMode
+                          ? Colors.black54
+                          : Theme.of(context).colorScheme.secondary,
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -126,8 +135,6 @@ class _AuthPageState extends State<AuthPage>
   }
 
   Widget _buildLoginTab(BuildContext context) {
-    print(loginController.loading.value);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
       child: Form(
@@ -148,20 +155,17 @@ class _AuthPageState extends State<AuthPage>
             ),
             const SizedBox(height: 18),
             MyButton(
-              text: loginController.loading.value
-                  ? const CircularProgressIndicator()
-                  : Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(1),
-                        letterSpacing: 1.2,
-                      ),
-                    ),
+              text: Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                  color: Get.isDarkMode
+                      ? Colors.grey.shade900
+                      : Theme.of(context).colorScheme.primary.withOpacity(1),
+                  letterSpacing: 1.2,
+                ),
+              ),
               onPressed: () {
                 if (_loginFormKey.currentState!.validate()) {
                   if (_loginEmailController.text.isNotEmpty &&
@@ -233,20 +237,21 @@ class _AuthPageState extends State<AuthPage>
               ),
               const SizedBox(height: 18),
               MyButton(
-                text: loginController.loading.value
-                    ? const CircularProgressIndicator()
-                    : Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(1),
-                          letterSpacing: 1.2,
-                        ),
-                      ),
+                text:
+                    //  loginController.loading.value
+                    //     ? const CircularProgressIndicator()
+                    //     :
+                    Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
+                    color: Get.isDarkMode
+                        ? Colors.grey.shade900
+                        : Theme.of(context).colorScheme.primary.withOpacity(1),
+                    letterSpacing: 1.2,
+                  ),
+                ),
                 onPressed: () {
                   if (_signUpFormKey.currentState!.validate()) {
                     signUp(context);
