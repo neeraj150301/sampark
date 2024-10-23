@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:sampark/config/svgs.dart';
 
@@ -11,6 +12,7 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final GlobalKey<SlideActionState> key = GlobalKey();
     return Scaffold(
         body: SafeArea(
@@ -107,6 +109,7 @@ class WelcomePage extends StatelessWidget {
               key: key,
               onSubmit: () {
                 // return null;
+
                 Get.to(() => const AuthGate());
                 return null;
                 // Future.delayed(

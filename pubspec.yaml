@@ -19,15 +19,23 @@ dependencies:
   firebase_core: ^3.4.0 # for firebase
   firebase_auth: ^5.2.0 # for firebase auth
   cloud_firestore: ^5.4.0  # for firestore DB
-  lottie: ^2.2.0   # for lottie animations
-  intl: ^0.19.0
-
+  lottie: ^2.2.0  # for lottie animations
+  intl: ^0.19.0  # for date and time formatting
+  flutter_launcher_icons: ^0.14.1 # for icon
+  shared_preferences: ^2.0.15 # for local storage
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_iconpadding.png"  # Path to your app icon image
+  adaptive_icon_background: "#FFFFFF"      # For Android adaptive icons (optional)
+  adaptive_icon_foreground: "assets/icons/app_iconpadding.png" # Optional
 
 flutter:
   uses-material-design: true

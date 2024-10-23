@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sampark/config/theme.dart';
 import 'package:sampark/firebase_options.dart';
-import 'package:sampark/pages/authPage/auth_page.dart';
 import 'package:sampark/pages/welcomePage/welcome_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/theme_controller.dart';
 import 'pages/authPage/auth_gate.dart';
-import 'pages/splashPage/splashPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+
+   final prefs = await SharedPreferences.getInstance();
+  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  
+  runApp(MyApp(isFirstTime: isFirstTime));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isFirstTime;
+
+  const MyApp({super.key, required this.isFirstTime});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
           themeMode: themeController.isDarkMode.value
               ? ThemeMode.dark
               : ThemeMode.light,
-          home: const AuthGate(),
+          home: isFirstTime ? const WelcomePage() : const AuthGate(),
         ));
   }
 }
