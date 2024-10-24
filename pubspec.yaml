@@ -1,5 +1,5 @@
 name: sampark
-description: "A new Flutter project."
+description: "A simple chat app made using flutter and firebase.\nHas a functionality of authentication one on one chatting and dark mode also."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
