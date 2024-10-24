@@ -12,9 +12,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-   final prefs = await SharedPreferences.getInstance();
+  final prefs = await SharedPreferences.getInstance();
   bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
-  
+
   runApp(MyApp(isFirstTime: isFirstTime));
 }
 

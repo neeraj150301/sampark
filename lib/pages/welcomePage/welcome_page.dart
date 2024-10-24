@@ -12,7 +12,6 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final GlobalKey<SlideActionState> key = GlobalKey();
     return Scaffold(
         body: SafeArea(
@@ -109,7 +108,7 @@ class WelcomePage extends StatelessWidget {
               key: key,
               onSubmit: () {
                 // return null;
-
+                _completeWelcome();
                 Get.to(() => const AuthGate());
                 return null;
                 // Future.delayed(
@@ -134,5 +133,10 @@ class WelcomePage extends StatelessWidget {
         ],
       ),
     )));
+  }
+
+    Future<void> _completeWelcome() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isFirstTime', false);
   }
 }

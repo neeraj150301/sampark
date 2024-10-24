@@ -30,12 +30,13 @@ dev_dependencies:
 
   flutter_lints: ^3.0.0
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/icons/app_iconpadding.png"  # Path to your app icon image
   adaptive_icon_background: "#FFFFFF"      # For Android adaptive icons (optional)
   adaptive_icon_foreground: "assets/icons/app_iconpadding.png" # Optional
+  android_name: "Chatty"
 
 flutter:
   uses-material-design: true
