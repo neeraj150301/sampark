@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sampark/config/svgs.dart';
 
 import '../controller/auth_service.dart';
+import '../pages/profile_page/profile_page.dart';
 import '../pages/settingsPage/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -55,6 +57,17 @@ class MyDrawer extends StatelessWidget {
                   leading: const Icon(Icons.home),
                   onTap: () {
                     Navigator.pop(context);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: ListTile(
+                  title: const Text('P R O F I L E'),
+                  leading: const Icon(Icons.person),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Get.to(() =>  ProfilePage());
                   },
                 ),
               ),

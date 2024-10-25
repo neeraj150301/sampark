@@ -46,7 +46,9 @@ class _MyTextFieldState extends State<MyTextField> {
               return 'Password lenght should not be less then 6';
             }
           }
-
+          if (value == null || value.isEmpty) {
+            return 'This field cannot be empty';
+          }
           return null;
         },
         decoration: InputDecoration(

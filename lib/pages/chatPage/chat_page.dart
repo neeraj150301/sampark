@@ -6,10 +6,10 @@ import '../../widget/chat_bubble.dart';
 import '../../widget/my_text_field.dart';
 
 class ChatPage extends StatelessWidget {
-  final String receiverEmail;
+  final String receiverName;
   final String receiverId;
 
-  ChatPage({super.key, required this.receiverEmail, required this.receiverId});
+  ChatPage({super.key, required this.receiverName, required this.receiverId});
 
   // message controller
   final TextEditingController _messageController = TextEditingController();
@@ -45,7 +45,7 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(receiverEmail),
+        title: Text(receiverName),
       ),
       body:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

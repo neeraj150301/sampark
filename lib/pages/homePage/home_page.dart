@@ -12,6 +12,22 @@ class HomePage extends StatelessWidget {
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
 
+
+
+  // // Fetch the user's name from Firestore
+  // Future<String?> getUserName() async {
+  //   DocumentSnapshot userDoc = await FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .doc(_authService.currentUser()!.uid)
+  //       .get();
+
+  //   if (userDoc.exists && userDoc.data() != null) {
+  //     Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+  //     return userData['name']; // Return name if it exists
+  //   }
+  //   return null; // Return null if no name is found
+  // }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,14 +76,14 @@ class HomePage extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
         child: UserTile(
-          user: userData['email'],
+          user: userData['name'] ?? userData['email'],
           onTap: () {
             // tap on user to go to chat page
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => ChatPage(
-                    receiverEmail: userData['email'],
+                    receiverName: userData['name'] ?? userData['email'],
                     receiverId: userData['uid']),
               ),
             );

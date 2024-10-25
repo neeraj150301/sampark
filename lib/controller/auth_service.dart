@@ -25,6 +25,7 @@ class AuthService {
           'uid': result.user!.uid,
           'email': email,
         },
+        SetOptions(merge: true), // Merge fields instead of overwriting
       );
 
       return result;

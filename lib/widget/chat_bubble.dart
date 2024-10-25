@@ -58,7 +58,7 @@ class _ChatBubbleState extends State<ChatBubble> {
           ),
           if (_showTimestamp) // Show timestamp when tapped
             Padding(
-              padding: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.all(5),
               child: Text(
                 DateFormat('hh:mm a')
                     .format(widget.timestamp), // Format timestamp
