@@ -23,6 +23,9 @@ dependencies:
   intl: ^0.19.0  # for date and time formatting
   flutter_launcher_icons: ^0.14.1 # for icon
   shared_preferences: ^2.0.15 # for local storage
+  firebase_messaging: ^15.1.0 # for push notifications
+  flutter_local_notifications: ^17.2.4 # for local notifications
+
 
 dev_dependencies:
   flutter_test:

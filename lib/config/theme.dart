@@ -21,7 +21,7 @@ ThemeData darkTheme = ThemeData(
   secondary: Colors.grey.shade300,
 
       primary: dPrimaryColour,
-      onPrimary: Color(0xFF121212),
+      onPrimary: const Color(0xFF121212),
       background: dBackgroundColour,
       onBackground: dOnBackgroundColour,
       primaryContainer: dContainerColour,

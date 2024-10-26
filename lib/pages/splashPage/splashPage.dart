@@ -10,7 +10,7 @@ class SplashPage extends StatelessWidget {
         title: Text("Splash Screen",
         style: Theme.of(context).textTheme.headlineSmall,),
       ),
-      body: Column(
+      body: const Column(
         children: [
           Center(child: Text("Splash Page"),)
         ]
