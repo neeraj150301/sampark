@@ -60,14 +60,16 @@ class HomePage extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
         child: UserTile(
-          user: userData['name'] ?? userData['email'],
+          user: userData['name'] != '' ? userData['name'] : userData['email'],
           onTap: () {
             // tap on user to go to chat page
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => ChatPage(
-                    receiverName: userData['name'] ?? userData['email'],
+                    receiverName: userData['name'] != ''
+                        ? userData['name']
+                        : userData['email'],
                     receiverId: userData['uid']),
               ),
             );

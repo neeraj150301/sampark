@@ -1,9 +1,9 @@
 name: sampark
-description: "A simple chat app made using flutter and firebase.\nHas a functionality of authentication one on one chatting and dark mode also."
+description: "A simple chat app made using flutter and firebase.\nHas a functionality of authentication, one on one chatting and dark mode also."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.3
 
 environment:
   sdk: '>=3.3.1 <4.0.0'
@@ -24,8 +24,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.1 # for icon
   shared_preferences: ^2.0.15 # for local storage
   firebase_messaging: ^15.1.0 # for push notifications
-  flutter_local_notifications: ^17.2.4 # for local notifications
-
+  http: ^1.2.2 # for http request 
+  googleapis_auth: ^1.6.0 # for notification token
 
 dev_dependencies:
   flutter_test:
@@ -36,9 +36,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icons/app_iconpadding.png"  # Path to your app icon image
+  image_path: "assets/icons/app_padding_large.png"  # Path to your app icon image
   adaptive_icon_background: "#FFFFFF"      # For Android adaptive icons (optional)
-  adaptive_icon_foreground: "assets/icons/app_iconpadding.png" # Optional
+  adaptive_icon_foreground: "assets/icons/app_padding_large.png" # Optional
   android_name: "Chatty"
 
 flutter:

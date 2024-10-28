@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
       return null; // Return null if no name is found
     }
 
-      // Function to save the name
+    // Function to save the name
     Future<void> saveUserName() async {
       String name = nameController.text;
 
@@ -46,7 +46,6 @@ class ProfilePage extends StatelessWidget {
         navigator?.pop();
       }
     }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -76,8 +75,9 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(fontSize: 15),
                         ),
                         Text(
-                          name ??
-                              "${authService.currentUser()!.email}", // Fallback to email
+                          name != ''
+                              ? name!
+                              : "${authService.currentUser()!.email}", // Fallback to email
                           style: const TextStyle(fontSize: 15),
                         ),
                       ],

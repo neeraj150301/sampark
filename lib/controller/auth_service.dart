@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -19,11 +20,14 @@ class AuthService {
       UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+
       // save user to firestore if does'nt exist
       await _fireStore.collection('Users').doc(result.user!.uid).set(
         {
           'uid': result.user!.uid,
           'email': email,
+          'fcmToken': fcmToken,
         },
         SetOptions(merge: true), // Merge fields instead of overwriting
       );
@@ -118,11 +122,15 @@ class AuthService {
       UserCredential result = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+
       // save user to firestore
       await _fireStore.collection('Users').doc(result.user!.uid).set(
         {
           'uid': result.user!.uid,
           'email': email,
+          'name': '',
+          'fcmToken': fcmToken,
         },
       );
       return result;
