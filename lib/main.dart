@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sampark/config/theme.dart';
 import 'package:sampark/firebase_options.dart';
-import 'package:sampark/pages/welcomePage/welcome_page.dart';
+// import 'package:sampark/pages/welcomePage/welcome_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/theme_controller.dart';
-import 'pages/authPage/auth_gate.dart';
+// import 'pages/authPage/auth_gate.dart';
+import 'pages/splashPage/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,8 +17,6 @@ void main() async {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   await firebaseMessaging.requestPermission();
 
-  // String? fcmToken = await FirebaseMessaging.instance.getToken();
-  // print(fcmToken);
   final prefs = await SharedPreferences.getInstance();
   bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
@@ -41,7 +40,8 @@ class MyApp extends StatelessWidget {
           themeMode: themeController.isDarkMode.value
               ? ThemeMode.dark
               : ThemeMode.light,
-          home: isFirstTime ? const WelcomePage() : const AuthGate(),
+          home: const SplashPage(),
+          // isFirstTime ? const WelcomePage() : const AuthGate(),
         ));
   }
 }
