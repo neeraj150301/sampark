@@ -26,6 +26,8 @@ dependencies:
   firebase_messaging: ^15.1.0 # for push notifications
   http: ^1.2.2 # for http request 
   googleapis_auth: ^1.6.0 # for notification token
+  firebase_storage: ^12.2.0 # for storing images and videos
+  image_picker: ^1.1.2 # for image and video picker
 
 dev_dependencies:
   flutter_test:

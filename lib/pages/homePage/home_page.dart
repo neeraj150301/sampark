@@ -61,6 +61,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
         child: UserTile(
           user: userData['name'] != '' ? userData['name'] : userData['email'],
+          profileImageUrl: userData['profileImageUrl'], // Pass profile image URL
           onTap: () {
             // tap on user to go to chat page
             Navigator.push(
@@ -70,7 +71,8 @@ class HomePage extends StatelessWidget {
                     receiverName: userData['name'] != ''
                         ? userData['name']
                         : userData['email'],
-                    receiverId: userData['uid']),
+                    receiverId: userData['uid'],
+                    profileImageUrl: userData['profileImageUrl'],),
               ),
             );
           },

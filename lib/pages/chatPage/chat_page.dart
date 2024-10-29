@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:sampark/controller/chat_service.dart';
 import '../../controller/auth_service.dart';
 import '../../widget/chat_bubble.dart';
+import '../../widget/full_screen_image_view.dart';
 import '../../widget/my_text_field.dart';
 
 class ChatPage extends StatelessWidget {
   final String receiverName;
   final String receiverId;
+  final String? profileImageUrl;
 
-  ChatPage({super.key, required this.receiverName, required this.receiverId});
+  ChatPage(
+      {super.key,
+      required this.receiverName,
+      required this.profileImageUrl,
+      required this.receiverId});
 
   // message controller
   final TextEditingController _messageController = TextEditingController();
@@ -45,7 +51,38 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(receiverName),
+        title: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            GestureDetector(
+            onTap: () {
+              if (profileImageUrl != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FullScreenImagePage(
+                      imageUrl: profileImageUrl!,
+                    ),
+                  ),
+                );
+              }
+            },
+            child: profileImageUrl != null
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(profileImageUrl!),
+                    radius: 20,
+                  )
+                : Icon(Icons.person,
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.6)),
+                        ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(receiverName),
+          ],
+        ),
       ),
       body:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -98,8 +135,10 @@ class ChatPage extends StatelessWidget {
       crossAxisAlignment:
           isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        ChatBubble(message: data['message'], isCurrentUser: isCurrentUser, timestamp: dateTime),
-
+        ChatBubble(
+            message: data['message'],
+            isCurrentUser: isCurrentUser,
+            timestamp: dateTime),
       ],
     ); // display message
   }
