@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
       Map<String, dynamic> userData, BuildContext context) {
     if (userData['email'] != _authService.currentUser()!.email) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
         child: UserTile(
           user: userData['name'] != '' ? userData['name'] : userData['email'],
           onTap: () {

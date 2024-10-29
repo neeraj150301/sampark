@@ -23,7 +23,8 @@ class _MyTextFieldState extends State<MyTextField> {
       child: TextFormField(
         obscureText: widget.obscureText,
         controller: widget.controller,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.multiline,
+        textInputAction: TextInputAction.newline,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           if (widget.hintText == "Enter Email") {
