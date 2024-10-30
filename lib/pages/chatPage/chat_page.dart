@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sampark/controller/chat_service.dart';
@@ -56,27 +57,47 @@ class ChatPage extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             GestureDetector(
-            onTap: () {
-              if (profileImageUrl != null) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FullScreenImagePage(
-                      imageUrl: profileImageUrl!,
+              onTap: () {
+                if (profileImageUrl != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FullScreenImagePage(
+                        imageUrl: profileImageUrl!,
+                      ),
                     ),
-                  ),
-                );
-              }
-            },
-            child: profileImageUrl != null
-                ? CircleAvatar(
-                    backgroundImage: NetworkImage(profileImageUrl!),
-                    radius: 20,
-                  )
-                : Icon(Icons.person,
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.6)),
+                  );
+                }
+              },
+              child: profileImageUrl != null
+                  ? CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Colors.grey.shade300,
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          height: 38,
+                          width: 38,
+                          fit: BoxFit.cover,
+                          imageUrl: profileImageUrl!,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 18,
+                      child: Icon(Icons.person,
+                          size: 30,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.6)),
+                    ),
+            ),
             const SizedBox(
               width: 10,
             ),
@@ -118,6 +139,7 @@ class ChatPage extends StatelessWidget {
         });
 
         return ListView.builder(
+          
             controller: _scrollController,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
@@ -152,7 +174,7 @@ class ChatPage extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 20.0, right: 20.0, bottom: 20, top: 10),
+                  left: 20.0, right: 20.0, bottom: 10, top: 5),
               child: MyTextField(
                 hintText: 'Type message here...',
                 obscureText: false,
@@ -161,7 +183,7 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 15.0, bottom: 20, top: 10),
+            padding: const EdgeInsets.only(right: 15.0, bottom: 10, top: 5),
             child: Container(
               decoration: const BoxDecoration(
                   shape: BoxShape.circle,

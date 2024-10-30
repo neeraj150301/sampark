@@ -28,6 +28,7 @@ dependencies:
   googleapis_auth: ^1.6.0 # for notification token
   firebase_storage: ^12.2.0 # for storing images and videos
   image_picker: ^1.1.2 # for image and video picker
+  cached_network_image: ^3.4.0 # for image render with cache 
 
 dev_dependencies:
   flutter_test:
