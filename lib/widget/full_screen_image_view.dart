@@ -13,17 +13,22 @@ class FullScreenImagePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        // backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.black,
         title: Text(isImageMessage ? 'Chat Image' : 'Profile Image'),
         centerTitle: true,
       ),
-      body: Center(
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: InteractiveViewer(
+          panEnabled: true,
+          minScale: 0.5,
+          maxScale: 4.0,
           child: CachedNetworkImage(
-            filterQuality: FilterQuality.high,
+            // filterQuality: FilterQuality.high,
             // height: 38,
             // width: 38,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
             imageUrl: imageUrl,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 CircularProgressIndicator(value: downloadProgress.progress),

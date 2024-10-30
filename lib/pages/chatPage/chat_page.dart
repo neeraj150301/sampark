@@ -91,12 +91,14 @@ class ChatPage extends StatelessWidget {
                     )
                   : CircleAvatar(
                       radius: 18,
-                      child: Icon(Icons.person,
-                          size: 30,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .inversePrimary
-                              .withOpacity(0.6)),
+                      child: Icon(
+                        Icons.person,
+                        size: 30,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onTertiary
+                            .withOpacity(0.6),
+                      ),
                     ),
             ),
             const SizedBox(

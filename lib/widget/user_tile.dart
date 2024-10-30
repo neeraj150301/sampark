@@ -24,7 +24,7 @@ class UserTile extends StatelessWidget {
         leading: profileImageUrl != null
             ? CircleAvatar(
                 radius: 18,
-                // backgroundColor: Colors.grey.shade300,
+                // backgroundColor: Colors.grey.shade100,
                 child: ClipOval(
                   child: CachedNetworkImage(
                     height: 38,
@@ -50,10 +50,8 @@ class UserTile extends StatelessWidget {
                 child: Icon(
                   Icons.person,
                   size: 30,
-                  color: Theme.of(context)
-                      .colorScheme
-                      .inversePrimary
-                      .withOpacity(0.6),
+                  color:
+                      Theme.of(context).colorScheme.onTertiary.withOpacity(0.6),
                 ),
               ),
         title: Text(

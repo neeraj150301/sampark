@@ -6,7 +6,7 @@ ThemeData lightTheme = ThemeData(
   background: const Color.fromARGB(255, 231, 231, 231),
   // primary: Colors.grey.shade500,
   primary: const Color.fromARGB(255, 94, 106, 112),
-
+  onTertiary: Colors.grey.shade100,
   secondary: Colors.grey.shade300,
   tertiary: Colors.white,
   inversePrimary: Colors.grey.shade900,
@@ -17,10 +17,10 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     useMaterial3: true,
     colorScheme: ColorScheme.dark(
-  tertiary: Colors.black54,
-  secondary: Colors.grey.shade300,
-
+      tertiary: Colors.black54,
+      secondary: Colors.grey.shade300,
       primary: dPrimaryColour,
+      onTertiary: const Color.fromARGB(255, 194, 148, 250),
       onPrimary: const Color(0xFF121212),
       background: dBackgroundColour,
       onBackground: dOnBackgroundColour,

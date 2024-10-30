@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -118,22 +119,36 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 20),
             GestureDetector(
               onTap: _pickImage, // Allow user to pick an image on tap
-              child: CircleAvatar(
-                radius: 70,
-                backgroundImage: _profileImageUrl != null
-                    ? NetworkImage(_profileImageUrl!)
-                    : (_profileImage != null
-                        ? FileImage(_profileImage!)
-                        : const AssetImage('assets/icons/app_padding_large.png')
-                            as ImageProvider),
-                child: _profileImageUrl == null && _profileImage == null
-                    ? const Icon(
-                        Icons.add_a_photo,
-                        size: 30,
-                        color: Colors.white70,
-                      )
-                    : null,
-              ),
+              child: _profileImageUrl != null
+                  ? ClipOval(
+                      child: CachedNetworkImage(
+                        height: 180,
+                        width: 180,
+                        fit: BoxFit.cover,
+                        imageUrl: _profileImageUrl!,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 80,
+                      backgroundImage: (_profileImage != null
+                          ? FileImage(_profileImage!)
+                          : const AssetImage(
+                                  'assets/icons/app_padding_large.png')
+                              as ImageProvider),
+                      child: _profileImageUrl == null && _profileImage == null
+                          ? const Icon(
+                              Icons.add_a_photo,
+                              size: 30,
+                              color: Colors.white70,
+                            )
+                          : null,
+                    ),
             ),
             const SizedBox(height: 20),
             Padding(
