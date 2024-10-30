@@ -67,7 +67,7 @@ class MyDrawer extends StatelessWidget {
                   leading: const Icon(Icons.person),
                   onTap: () {
                     Navigator.pop(context);
-                    Get.to(() =>  ProfilePage());
+                    Get.to(() =>  const ProfilePage());
                   },
                 ),
               ),

@@ -3,7 +3,7 @@ description: "A simple chat app made using flutter and firebase.\nHas a function
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.3
+version: 1.0.4
 
 environment:
   sdk: '>=3.3.1 <4.0.0'
@@ -29,6 +29,7 @@ dependencies:
   firebase_storage: ^12.2.0 # for storing images and videos
   image_picker: ^1.1.2 # for image and video picker
   cached_network_image: ^3.4.0 # for image render with cache 
+
 
 dev_dependencies:
   flutter_test:

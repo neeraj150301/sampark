@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sampark/controller/access_firebase_token.dart';
 import 'package:sampark/model/message_model.dart';
 
@@ -23,7 +26,9 @@ class ChatService {
   }
 
   // send message
-  Future<void> sendMessage(String receiverId, String message) async {
+  Future<void> sendMessage(String receiverId, String message, {
+  String? imageUrl,
+}) async {
     // current user
     final String userID = _firebaseAuth.currentUser!.uid;
     final String userEmail = _firebaseAuth.currentUser!.email!;
@@ -34,7 +39,8 @@ class ChatService {
         senderId: userID,
         senderEmail: userEmail,
         receiverId: receiverId,
-        message: message,
+        message: imageUrl != null ? '' : message, // Empty message for image
+        imageUrl: imageUrl, // Image URL if available
         timestamp: timestamp);
 
     // chat room Id
@@ -59,13 +65,17 @@ class ChatService {
 
     // print(receiverFcmToken);
     if (receiverFcmToken != null) {
+      // Send a notification (indicating whether it’s an image or text message)
+    String notificationMessage =
+        imageUrl != null ? '[Image]' : message; // Show '[Image]' for image
+
       // Send a notification
       await sendNotification(
           receiverFcmToken,
           senderSnapshot['name'] != ''
               ? senderSnapshot['name']
               : senderSnapshot['email'],
-          message);
+          notificationMessage);
     }
   }
 
@@ -110,5 +120,25 @@ class ChatService {
     } catch (e) {
       // print("Error sending FCM notification: $e");
     }
+  }
+
+  Future<void> pickAndSendImages(String receiverId) async {
+    final ImagePicker picker = ImagePicker();
+    final List<XFile> images = await picker.pickMultiImage();
+
+    if (images.isNotEmpty) {
+      for (var image in images) {
+        final imageUrl = await _uploadImage(File(image.path));
+        await sendMessage(receiverId, '', imageUrl: imageUrl); // Send each image as a message
+      }
+    }
+  }
+
+// Upload image to Firebase Storage
+  Future<String> _uploadImage(File imageFile) async {
+    final storageRef = FirebaseStorage.instance.ref().child(
+        'chat_images/${_firebaseAuth.currentUser!.uid}_${DateTime.now()}.jpg');
+    await storageRef.putFile(imageFile);
+    return await storageRef.getDownloadURL();
   }
 }

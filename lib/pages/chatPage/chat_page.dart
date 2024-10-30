@@ -64,6 +64,7 @@ class ChatPage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => FullScreenImagePage(
                         imageUrl: profileImageUrl!,
+                        isImageMessage: false,
                       ),
                     ),
                   );
@@ -72,7 +73,7 @@ class ChatPage extends StatelessWidget {
               child: profileImageUrl != null
                   ? CircleAvatar(
                       radius: 18,
-                      backgroundColor: Colors.grey.shade300,
+                      backgroundColor: Colors.transparent,
                       child: ClipOval(
                         child: CachedNetworkImage(
                           height: 38,
@@ -94,7 +95,7 @@ class ChatPage extends StatelessWidget {
                           size: 30,
                           color: Theme.of(context)
                               .colorScheme
-                              .primary
+                              .inversePrimary
                               .withOpacity(0.6)),
                     ),
             ),
@@ -108,7 +109,7 @@ class ChatPage extends StatelessWidget {
       body:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Expanded(child: _buildMessageList()),
-        _buildMessageInput(),
+        _buildMessageInput(context),
       ]),
     );
   }
@@ -139,7 +140,6 @@ class ChatPage extends StatelessWidget {
         });
 
         return ListView.builder(
-          
             controller: _scrollController,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
@@ -153,28 +153,54 @@ class ChatPage extends StatelessWidget {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     bool isCurrentUser = data['senderId'] == _authService.currentUser()!.uid;
     DateTime dateTime = data['timestamp'].toDate();
+
+    bool isImageMessage = data['imageUrl'] != null;
+
     return Column(
       crossAxisAlignment:
           isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         ChatBubble(
-            message: data['message'],
+            message: isImageMessage ? data['imageUrl'] : data['message'],
+            // ? ClipRRect(
+            //     borderRadius: BorderRadius.circular(8.0),
+            //     child: CachedNetworkImage(
+            //       imageUrl: data['imageUrl'],
+            //       progressIndicatorBuilder:
+            //           (context, url, downloadProgress) =>
+            //               CircularProgressIndicator(
+            //                   value: downloadProgress.progress),
+            //       errorWidget: (context, url, error) => Icon(Icons.error),
+            //       height: 150, // Adjust dimensions as needed
+            //       width: 150,
+            //       fit: BoxFit.cover,
+            //     ),
+            //   )
+            // :
+            // data['message'],
             isCurrentUser: isCurrentUser,
+            isImageMessage: isImageMessage,
             timestamp: dateTime),
       ],
     ); // display message
   }
 
   // type message area and send button
-  Widget _buildMessageInput() {
+  Widget _buildMessageInput(BuildContext context) {
     return Container(
       color: Colors.transparent,
       child: Row(
         children: [
+          IconButton(
+            iconSize: 28,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            icon:
+                Icon(Icons.image, color: Theme.of(context).colorScheme.primary),
+            onPressed: () => _chatService.pickAndSendImages(receiverId),
+          ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 20.0, right: 20.0, bottom: 10, top: 5),
+              padding: const EdgeInsets.only(right: 10.0, bottom: 10, top: 5),
               child: MyTextField(
                 hintText: 'Type message here...',
                 obscureText: false,
@@ -183,7 +209,7 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 15.0, bottom: 10, top: 5),
+            padding: const EdgeInsets.only(right: 10.0, bottom: 10, top: 5),
             child: Container(
               decoration: const BoxDecoration(
                   shape: BoxShape.circle,

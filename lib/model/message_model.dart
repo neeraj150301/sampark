@@ -8,6 +8,7 @@ class Message {
   final String senderEmail;
   final String receiverId;
   final String message;
+  String? imageUrl; // Optional image URL
   final Timestamp timestamp;
 
   Message({
@@ -15,6 +16,7 @@ class Message {
     required this.senderEmail,
     required this.receiverId,
     required this.message,
+    this.imageUrl,
     required this.timestamp,
   });
 
@@ -40,6 +42,7 @@ class Message {
       'senderEmail': senderEmail,
       'receiverId': receiverId,
       'message': message,
+      'imageUrl': imageUrl,
       'timestamp': timestamp,
     };
   }
@@ -66,21 +69,20 @@ class Message {
   @override
   bool operator ==(covariant Message other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.senderId == senderId &&
-      other.senderEmail == senderEmail &&
-      other.receiverId == receiverId &&
-      other.message == message &&
-      other.timestamp == timestamp;
+
+    return other.senderId == senderId &&
+        other.senderEmail == senderEmail &&
+        other.receiverId == receiverId &&
+        other.message == message &&
+        other.timestamp == timestamp;
   }
 
   @override
   int get hashCode {
     return senderId.hashCode ^
-      senderEmail.hashCode ^
-      receiverId.hashCode ^
-      message.hashCode ^
-      timestamp.hashCode;
+        senderEmail.hashCode ^
+        receiverId.hashCode ^
+        message.hashCode ^
+        timestamp.hashCode;
   }
 }

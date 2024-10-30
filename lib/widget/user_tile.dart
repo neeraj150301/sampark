@@ -35,7 +35,8 @@ class UserTile extends StatelessWidget {
                         (context, url, downloadProgress) =>
                             CircularProgressIndicator(
                                 value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                 ),
               )
@@ -46,10 +47,14 @@ class UserTile extends StatelessWidget {
             //   )
             : CircleAvatar(
                 radius: 18,
-                child: Icon(Icons.person,
-                    size: 30,
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.6)),
+                child: Icon(
+                  Icons.person,
+                  size: 30,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .inversePrimary
+                      .withOpacity(0.6),
+                ),
               ),
         title: Text(
           user,
